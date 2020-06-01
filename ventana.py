@@ -42,7 +42,7 @@ cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
 
 #botones
-btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: strID.set(idCaja.get()))
+btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: obtenerDatos())
 btnAlta.place(x=300, y=85)
 btnBaja=tk.Button(ventana, text="Realizar BAJA")
 btnBaja.place(x=300, y=115)
@@ -52,10 +52,23 @@ btnCambio.place(x=300, y=145)
 #Variables
 strID=tk.StringVar()
 strMarca=tk.StringVar()
-strModeloa=tk.StringVar()
+strModelo=tk.StringVar()
 strTipo=tk.StringVar()
 strPrecio=tk.StringVar()
 strCantidad=tk.StringVar()
+
+#Funciones
+def obtenerDatos():
+	strID.set(idCaja.get())
+	strMarca.set(marcaCaja.get())
+	strModelo.set(modeCaja.get())
+	strTipo.set(tipoCaja.get())
+	strPrecio.set(precioCaja.get())
+	strCantidad.set(cantCaja.get())
+	imprimir()
+
+def imprimir():
+	print(strID.get()+strMarca.get())
 
 #//////////////
 ventana.mainloop()
