@@ -36,6 +36,10 @@ strCon=tk.StringVar()
 def obtenerDatos():
 	strUs.set(usCaja.get())
 	strCon.set(conCaja.get())
+	if not strUs.get() or not strCon.get():
+		print("Faltan Datos")
+	else:
+		print("Entrando...")
 
 #//////////////
 login.mainloop()

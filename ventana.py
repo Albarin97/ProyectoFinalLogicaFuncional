@@ -65,7 +65,11 @@ def obtenerDatos():
 	strTipo.set(tipoCaja.get())
 	strPrecio.set(precioCaja.get())
 	strCantidad.set(cantCaja.get())
-	imprimir()
+	if not strID.get() or not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get():
+		print("Faltan datos")
+	else:
+		print(strID.get())
+
 
 def imprimir():
 	print(strID.get()+strMarca.get())
