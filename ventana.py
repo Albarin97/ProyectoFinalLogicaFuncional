@@ -41,5 +41,14 @@ precioCaja.place(x=150, y=160)
 cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
 
+#botones
+btnAlta=tk.Button(ventana, text="Realizar ALTA")
+btnAlta.place(x=300, y=85)
+btnBaja=tk.Button(ventana, text="Realizar BAJA")
+btnBaja.place(x=300, y=115)
+btnCambio=tk.Button(ventana, text="Realizar CAMBIOS")
+btnCambio.place(x=300, y=145)
+
+
 #//////////////
 ventana.mainloop()
