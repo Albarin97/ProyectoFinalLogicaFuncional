@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox as MB
 
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
@@ -66,7 +67,7 @@ def obtenerDatos():
 	strPrecio.set(precioCaja.get())
 	strCantidad.set(cantCaja.get())
 	if not strID.get() or not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get():
-		print("Faltan datos")
+		MB.showerror("Error", "Faltan Datos")
 	else:
 		print(strID.get())
 
@@ -75,7 +76,7 @@ def obtenerId():
 	if strID.get():
 		print("Si esta")
 	else:
-		print("Introduce un ID")
+		MB.showerror("Error", "Introduce un ID")
 
 def imprimir():
 	print(strID.get()+strMarca.get())

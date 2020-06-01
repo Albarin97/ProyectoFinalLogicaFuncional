@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox as MB
 
 #Creacion login y Configuracion
 login = tk.Tk()
@@ -37,9 +38,10 @@ def obtenerDatos():
 	strUs.set(usCaja.get())
 	strCon.set(conCaja.get())
 	if not strUs.get() or not strCon.get():
-		print("Faltan Datos")
+		MB.showerror("Error", "Faltan Datos")
 	else:
 		print("Entrando...")
+
 
 #//////////////
 login.mainloop()
