@@ -42,13 +42,20 @@ cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
 
 #botones
-btnAlta=tk.Button(ventana, text="Realizar ALTA")
+btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: strID.set(idCaja.get()))
 btnAlta.place(x=300, y=85)
 btnBaja=tk.Button(ventana, text="Realizar BAJA")
 btnBaja.place(x=300, y=115)
 btnCambio=tk.Button(ventana, text="Realizar CAMBIOS")
 btnCambio.place(x=300, y=145)
 
+#Variables
+strID=tk.StringVar()
+strMarca=tk.StringVar()
+strModeloa=tk.StringVar()
+strTipo=tk.StringVar()
+strPrecio=tk.StringVar()
+strCantidad=tk.StringVar()
 
 #//////////////
 ventana.mainloop()
