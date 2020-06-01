@@ -12,9 +12,34 @@ etiqueta=tk.Label(ventana,text="Bienvenido Al Sistema ABCC", bg="OldLace")
 titulo.pack(fill=tk.X)
 etiqueta.pack()
 
+#etiquetas
+idLabel=tk.Label(ventana,text="ID", bg="OldLace")
+idLabel.place(x=30, y=60)
+marcaLabel=tk.Label(ventana,text="Marca", bg="OldLace")
+marcaLabel.place(x=30, y=85)
+modeloLabel=tk.Label(ventana,text="Modelo", bg="OldLace")
+modeloLabel.place(x=30, y=110)
+tipoLabel=tk.Label(ventana,text="Tipo", bg="OldLace")
+tipoLabel.place(x=30, y=135)
+precioLabel=tk.Label(ventana,text="Precio", bg="OldLace")
+precioLabel.place(x=30, y=160)
+cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
+cantidadLabel.place(x=30, y=185)
+
+
 #cajas
-idcaja = tk.Entry(ventana)
-idcaja.place(x=20, y=20)
+idCaja = tk.Entry(ventana)
+idCaja.place(x=150, y=60)
+marcaCaja = tk.Entry(ventana)
+marcaCaja.place(x=150, y=85)
+modeCaja = tk.Entry(ventana)
+modeCaja.place(x=150, y=110)
+tipoCaja = tk.Entry(ventana)
+tipoCaja.place(x=150, y=135)
+precioCaja = tk.Entry(ventana)
+precioCaja.place(x=150, y=160)
+cantCaja = tk.Entry(ventana)
+cantCaja.place(x=150, y=185)
 
 #//////////////
 ventana.mainloop()
