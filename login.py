@@ -25,8 +25,17 @@ conCaja=tk.Entry(login,show="*")
 conCaja.place(x=100, y=180)
 
 #boton
-btnIniciar=tk.Button(login, text="Iniciar")
+btnIniciar=tk.Button(login, text="Iniciar", command=lambda: obtenerDatos())
 btnIniciar.place(x=130, y=250)
+
+#vars
+strUs=tk.StringVar()
+strCon=tk.StringVar()
+
+#defs
+def obtenerDatos():
+	strUs.set(usCaja.get())
+	strCon.set(conCaja.get())
 
 #//////////////
 login.mainloop()
