@@ -44,9 +44,9 @@ cantCaja.place(x=150, y=185)
 #botones
 btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: obtenerDatos())
 btnAlta.place(x=300, y=85)
-btnBaja=tk.Button(ventana, text="Realizar BAJA")
+btnBaja=tk.Button(ventana, text="Realizar BAJA", command=lambda: obtenerId())
 btnBaja.place(x=300, y=115)
-btnCambio=tk.Button(ventana, text="Realizar CAMBIOS")
+btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", command=lambda: obtenerDatos())
 btnCambio.place(x=300, y=145)
 
 #Variables
@@ -70,6 +70,12 @@ def obtenerDatos():
 	else:
 		print(strID.get())
 
+def obtenerId():
+	strID.set(idCaja.get())
+	if strID.get():
+		print("Si esta")
+	else:
+		print("Introduce un ID")
 
 def imprimir():
 	print(strID.get()+strMarca.get())
