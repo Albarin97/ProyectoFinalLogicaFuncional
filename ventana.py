@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox as MB
+from tkinter import ttk
 
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
@@ -28,14 +29,17 @@ cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
 cantidadLabel.place(x=30, y=185)
 
 
+
 #cajas
 idCaja = tk.Entry(ventana)
 idCaja.place(x=150, y=60)
-marcaCaja = tk.Entry(ventana)
+marcaCaja = ttk.Combobox(ventana, state="readonly", width=17)
+marcaCaja["values"] = ["Python", "C", "C++", "Java"]
 marcaCaja.place(x=150, y=85)
 modeCaja = tk.Entry(ventana)
 modeCaja.place(x=150, y=110)
-tipoCaja = tk.Entry(ventana)
+tipoCaja = ttk.Combobox(ventana, state="readonly", width=17)
+tipoCaja["values"] = ["Python", "C", "C++", "Java"]
 tipoCaja.place(x=150, y=135)
 precioCaja = tk.Entry(ventana)
 precioCaja.place(x=150, y=160)
@@ -43,13 +47,13 @@ cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
 
 #botones
-btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: obtenerDatos())
+btnAlta=tk.Button(ventana, text="Realizar ALTA", width=15, command=lambda: obtenerDatos())
 btnAlta.place(x=300, y=75)
-btnBaja=tk.Button(ventana, text="Realizar BAJA", command=lambda: obtenerId())
+btnBaja=tk.Button(ventana, text="Realizar BAJA", width=15, command=lambda: obtenerId())
 btnBaja.place(x=300, y=105)
-btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", command=lambda: obtenerDatos())
+btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: obtenerDatos())
 btnCambio.place(x=300, y=135)
-btnLimpiar=tk.Button(ventana, text="Limpiar", command=lambda: limpiar())
+btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
 
 #Variables
@@ -87,9 +91,9 @@ def imprimir():
 
 def limpiar():
 	idCaja.delete(0, tk.END)
-	marcaCaja.delete(0, tk.END)
+	marcaCaja.set("")
 	modeCaja.delete(0, tk.END)
-	tipoCaja.delete(0, tk.END)
+	tipoCaja.set("")
 	precioCaja.delete(0, tk.END)
 	cantCaja.delete(0, tk.END)
 
