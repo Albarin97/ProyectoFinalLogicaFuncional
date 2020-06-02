@@ -41,7 +41,11 @@ def obtenerDatos():
 		MB.showerror("Error", "Faltan Datos")
 	else:
 		print("Entrando...")
+		abrirVentana()
 
+def abrirVentana():
+	login.destroy()
+	import ventana
 
 #//////////////
 login.mainloop()

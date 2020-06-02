@@ -44,11 +44,13 @@ cantCaja.place(x=150, y=185)
 
 #botones
 btnAlta=tk.Button(ventana, text="Realizar ALTA", command=lambda: obtenerDatos())
-btnAlta.place(x=300, y=85)
+btnAlta.place(x=300, y=75)
 btnBaja=tk.Button(ventana, text="Realizar BAJA", command=lambda: obtenerId())
-btnBaja.place(x=300, y=115)
+btnBaja.place(x=300, y=105)
 btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", command=lambda: obtenerDatos())
-btnCambio.place(x=300, y=145)
+btnCambio.place(x=300, y=135)
+btnLimpiar=tk.Button(ventana, text="Limpiar", command=lambda: limpiar())
+btnLimpiar.place(x=300, y=165)
 
 #Variables
 strID=tk.StringVar()
@@ -80,6 +82,14 @@ def obtenerId():
 
 def imprimir():
 	print(strID.get()+strMarca.get())
+
+def limpiar():
+	idCaja.delete(0, tk.END)
+	marcaCaja.delete(0, tk.END)
+	modeCaja.delete(0, tk.END)
+	tipoCaja.delete(0, tk.END)
+	precioCaja.delete(0, tk.END)
+	cantCaja.delete(0, tk.END)
 
 #//////////////
 ventana.mainloop()
