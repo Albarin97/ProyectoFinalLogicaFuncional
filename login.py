@@ -26,8 +26,8 @@ conCaja=tk.Entry(login,show="*")
 conCaja.place(x=100, y=180)
 
 #boton
-btnIniciar=tk.Button(login, text="Iniciar", command=lambda: obtenerDatos())
-btnIniciar.place(x=130, y=250)
+btnIniciar=tk.Button(login, text="        Iniciar        ", height=2,  command=lambda: obtenerDatos())
+btnIniciar.place(x=110, y=250)
 
 #vars
 strUs=tk.StringVar()
@@ -37,11 +37,18 @@ strCon=tk.StringVar()
 def obtenerDatos():
 	strUs.set(usCaja.get())
 	strCon.set(conCaja.get())
+
 	if not strUs.get() or not strCon.get():
-		MB.showerror("Error", "Faltan Datos")
+		MB.showerror("Error", "Llena Los Campos")
+	elif not strUs.get().isalpha():
+		MB.showerror("Error", "Usuario Solo Puede Llevar LETRAS")
 	else:
-		print("Entrando...")
-		abrirVentana()
+		if strUs.get()=="a" and strCon.get()=="a":
+			abrirVentana()
+		else:
+			MB.showerror("Error", "Usuario o Contraseña Incorrectos")
+
+		
 
 def abrirVentana():
 	login.destroy()

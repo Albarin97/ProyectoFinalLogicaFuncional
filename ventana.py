@@ -70,13 +70,15 @@ def obtenerDatos():
 	strCantidad.set(cantCaja.get())
 	if not strID.get() or not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get():
 		MB.showerror("Error", "Faltan Datos")
+	elif not strPrecio.get().isdigit() or not strCantidad.get().isdigit():
+		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
-		print(strID.get())
+		MB.showinfo("Exito", "Alta/Cambio Realizado")
 
 def obtenerId():
 	strID.set(idCaja.get())
 	if strID.get():
-		print("Si esta")
+		MB.showinfo("Exito", "Baja Realizada")
 	else:
 		MB.showerror("Error", "Introduce un ID")
 
