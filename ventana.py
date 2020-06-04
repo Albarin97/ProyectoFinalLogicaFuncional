@@ -28,8 +28,6 @@ precioLabel.place(x=30, y=160)
 cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
 cantidadLabel.place(x=30, y=185)
 
-
-
 #cajas
 idCaja = tk.Entry(ventana)
 idCaja.place(x=150, y=60)
@@ -55,6 +53,21 @@ btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: 
 btnCambio.place(x=300, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
+btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
+btnLimpiar.place(x=350, y=165)
+
+#Listbox
+lb = tk.Listbox(ventana, borderwidth=2, activestyle=tk.DOTBOX);
+items = (
+	"Hola 2",
+	"Mundo 2"
+	)
+lb.insert(0, "Hola", "Mundo", *items)
+lb.place(x=500, y=60, width=200, height=150)
+
+def sacar():
+	print(lb.curselection()[0])
+
 
 #Variables
 strID=tk.StringVar()
