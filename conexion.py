@@ -13,18 +13,14 @@ class DataBase:
 
 		print("Conexion Exitosa")
 
-	def select_one(self, nom):
-		sql = "SELECT * FROM productos WHERE idproducto = '{}'".format(nom)
+	def select_one(self, id):
+		sql = "SELECT * FROM productos WHERE idproducto = {}".format(id)
 		try:
 			self.cursor.execute(sql)
-			juego = self.cursor.fetchone()
-
-			#print("Nombre: ", juego[0])
-			#print("Genero: ", juego[1])
-
+			producto = self.cursor.fetchone()
 		except Exception as e:
 			raise e
-		return juego
+		return producto
 
 
 	def select_all(self):
@@ -32,12 +28,6 @@ class DataBase:
 		try:
 			self.cursor.execute(sql)
 			productos = self.cursor.fetchall()
-
-			#for j in juego:
-			#	print("Nombre: ", j[0])
-			#	print("Genero: ", j[1])
-			#	print("_________\n")
-
 		except Exception as e:
 			raise e
 		return productos
@@ -58,7 +48,10 @@ class DataBase:
 		except Exception as e:
 			raise e
 
-database = DataBase()
+	#def cambio
+
+
+#database = DataBase()
 #database.select_one("A")
 #database.select_all()
 #database.alta("H", "CBR", "Depo", 1000, 10)

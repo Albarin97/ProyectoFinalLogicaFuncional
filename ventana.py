@@ -57,8 +57,17 @@ btnCambio.place(x=300, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
 btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
-btnLimpiar.place(x=350, y=165)
+btnLimpiar.place(x=30, y=385)
 
+#Variables
+strID=tk.StringVar()
+strMarca=tk.StringVar()
+strModelo=tk.StringVar()
+strTipo=tk.StringVar()
+strPrecio=tk.StringVar()
+strCantidad=tk.StringVar()
+
+#Funciones
 #Treeview
 def actualizarT():
 	lb = ttk.Treeview(ventana, columns=("mar", "mod", "tip", "pre","can"));
@@ -83,19 +92,27 @@ def actualizarT():
 lb = actualizarT()
 
 def sacar():
-	seleccionado = lb.selection()[0]
-	print(lb.item(seleccionado, option="text"))
+	try:
+		seleccionado = lb.selection()[0]
+		id = lb.item(seleccionado, option="text")
+		print(id)
+		cargar(id)
+	except Exception as e:
+		MB.showerror("Error", "Seleccione un Registro de la Tabla")
 
+def actualizarLB(lb):
+	return lb
 
-#Variables
-strID=tk.StringVar()
-strMarca=tk.StringVar()
-strModelo=tk.StringVar()
-strTipo=tk.StringVar()
-strPrecio=tk.StringVar()
-strCantidad=tk.StringVar()
+def cargar(id):
+	limpiar()
+	lista = con.DataBase().select_one(id)
+	idCaja.insert(0, lista[0])
+	marcaCaja.set(lista[1])
+	modeCaja.insert(0, lista[2])
+	tipoCaja.set(lista[3])
+	precioCaja.insert(0, lista[4])
+	cantCaja.insert(0, lista[5])
 
-#Funciones
 def obtenerDatos():
 	strID.set(idCaja.get())
 	strMarca.set(marcaCaja.get())
