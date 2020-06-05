@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox as MB
+from tkinter import PhotoImage
+#from PIL import Image, ImageTk
 
 #Creacion login y Configuracion
 login = tk.Tk()
+login.iconbitmap("logear.ico")
 login.title("Login")
 login.geometry("300x300")
 login.configure(bg="OldLace")
@@ -26,8 +29,12 @@ conCaja=tk.Entry(login,show="*")
 conCaja.place(x=100, y=180)
 
 #boton
-btnIniciar=tk.Button(login, text="        Iniciar        ", height=2,  command=lambda: obtenerDatos())
+img = PhotoImage(file='login.png')
+#img = ImageTk.PhotoImage(img)
+btnIniciar=tk.Button(login, image=img, text="Iniciar", width=60, command=lambda: obtenerDatos())
 btnIniciar.place(x=110, y=250)
+
+#img = tk.PhotoImage()
 
 #vars
 strUs=tk.StringVar()
