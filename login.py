@@ -30,11 +30,8 @@ conCaja.place(x=100, y=180)
 
 #boton
 img = PhotoImage(file='login.png')
-#img = ImageTk.PhotoImage(img)
 btnIniciar=tk.Button(login, image=img, text="Iniciar", width=60, command=lambda: obtenerDatos())
-btnIniciar.place(x=110, y=250)
-
-#img = tk.PhotoImage()
+btnIniciar.place(x=130, y=250)
 
 #vars
 strUs=tk.StringVar()
@@ -53,9 +50,8 @@ def obtenerDatos():
 		if strUs.get()=="a" and strCon.get()=="a":
 			abrirVentana()
 		else:
-			MB.showerror("Error", "Usuario o Contraseña Incorrectos")
+			MB.showerror("Error", "Usuario o Contraseña Incorrectos")	
 
-		
 
 def abrirVentana():
 	login.destroy()

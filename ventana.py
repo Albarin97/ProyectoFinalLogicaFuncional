@@ -1,9 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox as MB
 from tkinter import ttk
+from tkinter import PhotoImage
+import conexion as con
 
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
+ventana.iconbitmap("Logo.ico")
 ventana.title("Menu Albar's Moto Sport")
 ventana.geometry("1000x600")
 ventana.configure(bg="OldLace")
@@ -57,16 +60,21 @@ btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnLimpiar.place(x=350, y=165)
 
 #Listbox
-lb = tk.Listbox(ventana, borderwidth=2, activestyle=tk.DOTBOX);
-items = (
-	"Hola 2",
-	"Mundo 2"
-	)
-lb.insert(0, "Hola", "Mundo", *items)
-lb.place(x=500, y=60, width=200, height=150)
+lb = ttk.Treeview(ventana, columns=("nom", "gen"));
+lb.heading("#0", text="Pocision")
+lb.heading("nom", text="Nombre")
+lb.heading("gen", text="Genero")
+items = con.DataBase().select_all()
+for j in items:
+	lb.insert("", tk.END, text="1", values=(j[0], j[1]))
+	
+#lb.insert("",tk.END,text="2", values=(items[0], items[1]))
+#print(lb.set(it, "gen", "Holiwis"))
+lb.place(x=10, y=230, width=600, height=150)
 
 def sacar():
-	print(lb.curselection()[0])
+	seleccionado = lb.selection()[0]
+	print(lb.item(seleccionado, option="text"))
 
 
 #Variables
