@@ -6,7 +6,7 @@ class DataBase:
 			host="localhost",
 			user="root",
 			password="1234",
-			db="replica"
+			db="AMS"
 			)
 
 		self.cursor = self.connection.cursor()
@@ -14,7 +14,7 @@ class DataBase:
 		print("Conexion Exitosa")
 
 	def select_one(self, nom):
-		sql = "SELECT nombre, genero FROM games WHERE nombre = '{}'".format(nom)
+		sql = "SELECT * FROM productos WHERE idproducto = '{}'".format(nom)
 		try:
 			self.cursor.execute(sql)
 			juego = self.cursor.fetchone()
@@ -28,10 +28,10 @@ class DataBase:
 
 
 	def select_all(self):
-		sql = 'SELECT * FROM games'
+		sql = "SELECT * FROM productos"
 		try:
 			self.cursor.execute(sql)
-			juego = self.cursor.fetchall()
+			productos = self.cursor.fetchall()
 
 			#for j in juego:
 			#	print("Nombre: ", j[0])
@@ -40,8 +40,25 @@ class DataBase:
 
 		except Exception as e:
 			raise e
-		return juego
+		return productos
 
-#database = DataBase()
+	def alta(self, m, mo, t, p, c):
+		sql = "INSERT INTO productos (marca, modelo, tipo, precio, cantidad) VALUES ('{}', '{}', '{}', {}, {})".format(m, mo, t, p, c)
+		try:
+			self.cursor.execute(sql)
+			self.connection.commit()
+		except Exception as e:
+			raise e
+
+	def baja(self, id):
+		sql = "DELETE FROM productos WHERE idproducto={}".format(id)
+		try:
+			self.cursor.execute(sql)
+			self.connection.commit()
+		except Exception as e:
+			raise e
+
+database = DataBase()
 #database.select_one("A")
 #database.select_all()
+#database.alta("H", "CBR", "Depo", 1000, 10)

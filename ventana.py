@@ -59,18 +59,28 @@ btnLimpiar.place(x=300, y=165)
 btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnLimpiar.place(x=350, y=165)
 
-#Listbox
-lb = ttk.Treeview(ventana, columns=("nom", "gen"));
-lb.heading("#0", text="Pocision")
-lb.heading("nom", text="Nombre")
-lb.heading("gen", text="Genero")
-items = con.DataBase().select_all()
-for j in items:
-	lb.insert("", tk.END, text="1", values=(j[0], j[1]))
-	
-#lb.insert("",tk.END,text="2", values=(items[0], items[1]))
-#print(lb.set(it, "gen", "Holiwis"))
-lb.place(x=10, y=230, width=600, height=150)
+#Treeview
+def actualizarT():
+	lb = ttk.Treeview(ventana, columns=("mar", "mod", "tip", "pre","can"));
+	lb.heading("#0", text="ID")
+	lb.column("#0", width=10)
+	lb.heading("mar", text="Marca")
+	lb.column("mar", width=50)
+	lb.heading("mod", text="Modelo")
+	lb.column("mod", width=50)
+	lb.heading("tip", text="Tipo")
+	lb.column("tip", width=50)
+	lb.heading("pre", text="Precio")
+	lb.column("pre", width=50)
+	lb.heading("can", text="Cantidad")
+	lb.column("can", width=50)
+	items = con.DataBase().select_all()
+	for p in items:
+		lb.insert("", tk.END, text=p[0], values=(p[1], p[2], p[3], p[4], p[5]))
+	lb.place(x=10, y=230, width=600, height=150)
+	return lb
+
+lb = actualizarT()
 
 def sacar():
 	seleccionado = lb.selection()[0]
@@ -98,11 +108,16 @@ def obtenerDatos():
 	elif not strPrecio.get().isdigit() or not strCantidad.get().isdigit():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
+		realizarAlta(strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
+		#print(int(strPrecio.get())+int(strCantidad.get()))
 		MB.showinfo("Exito", "Alta/Cambio Realizado")
+		actualizarT()
 
 def obtenerId():
 	strID.set(idCaja.get())
 	if strID.get():
+		con.DataBase().baja(strID.get())
+		actualizarT();
 		MB.showinfo("Exito", "Baja Realizada")
 	else:
 		MB.showerror("Error", "Introduce un ID")
@@ -117,6 +132,9 @@ def limpiar():
 	tipoCaja.set("")
 	precioCaja.delete(0, tk.END)
 	cantCaja.delete(0, tk.END)
+
+def realizarAlta(m, mo, t, p, c):
+	con.DataBase().alta(m, mo, t, p, c)
 
 #//////////////
 ventana.mainloop()
