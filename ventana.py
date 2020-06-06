@@ -69,27 +69,28 @@ strCantidad=tk.StringVar()
 
 #Funciones
 #Treeview
+lb = ttk.Treeview(ventana, columns=("mar", "mod", "tip", "pre","can"));
+lb.heading("#0", text="ID")
+lb.column("#0", width=10)
+lb.heading("mar", text="Marca")
+lb.column("mar", width=50)
+lb.heading("mod", text="Modelo")
+lb.column("mod", width=50)
+lb.heading("tip", text="Tipo")
+lb.column("tip", width=50)
+lb.heading("pre", text="Precio")
+lb.column("pre", width=50)
+lb.heading("can", text="Cantidad")
+lb.column("can", width=50)
+
 def actualizarT():
-	lb = ttk.Treeview(ventana, columns=("mar", "mod", "tip", "pre","can"));
-	lb.heading("#0", text="ID")
-	lb.column("#0", width=10)
-	lb.heading("mar", text="Marca")
-	lb.column("mar", width=50)
-	lb.heading("mod", text="Modelo")
-	lb.column("mod", width=50)
-	lb.heading("tip", text="Tipo")
-	lb.column("tip", width=50)
-	lb.heading("pre", text="Precio")
-	lb.column("pre", width=50)
-	lb.heading("can", text="Cantidad")
-	lb.column("can", width=50)
+	lb.delete(*lb.get_children())
 	items = con.DataBase().select_all()
 	for p in items:
 		lb.insert("", tk.END, text=p[0], values=(p[1], p[2], p[3], p[4], p[5]))
 	lb.place(x=10, y=230, width=600, height=150)
+	lb.selection_remove()
 	return lb
-
-lb = actualizarT()
 
 def sacar():
 	try:

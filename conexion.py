@@ -49,7 +49,7 @@ class DataBase:
 			raise e
 
 
-	def baja(self, id):
+	def baja(self, idp):
 		sql = "DELETE FROM productos WHERE idproducto=%d" % (idp,)
 		try:
 			self.cursor.execute(sql)
