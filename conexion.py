@@ -13,8 +13,8 @@ class DataBase:
 
 		print("Conexion Exitosa")
 
-	def select_one(self, id):
-		sql = "SELECT * FROM productos WHERE idproducto = {}".format(id)
+	def select_one(self, idp):
+		sql = "SELECT * FROM productos WHERE idproducto = %d"%(idp,)
 		try:
 			self.cursor.execute(sql)
 			producto = self.cursor.fetchone()
@@ -33,15 +33,24 @@ class DataBase:
 		return productos
 
 	def alta(self, m, mo, t, p, c):
-		sql = "INSERT INTO productos (marca, modelo, tipo, precio, cantidad) VALUES ('{}', '{}', '{}', {}, {})".format(m, mo, t, p, c)
+		sql = "INSERT INTO productos (marca, modelo, tipo, precio, cantidad) VALUES ('%s', '%s', '%s', %d, %d)"%(m, mo, t, p, c,)
 		try:
 			self.cursor.execute(sql)
 			self.connection.commit()
 		except Exception as e:
 			raise e
 
+	def actualizar(self, idp, m, mo, t, p, c):
+		sql = "UPDATE productos SET marca='%s', modelo='%s', tipo='%s', precio=%d, cantidad=%d WHERE idproducto=%d"%(m, mo, t, p, c, idp,)
+		try:
+			self.cursor.execute(sql)
+			self.connection.commit()
+		except Exception as e:
+			raise e
+
+
 	def baja(self, id):
-		sql = "DELETE FROM productos WHERE idproducto={}".format(id)
+		sql = "DELETE FROM productos WHERE idproducto=%d" % (idp,)
 		try:
 			self.cursor.execute(sql)
 			self.connection.commit()
@@ -55,3 +64,4 @@ class DataBase:
 #database.select_one("A")
 #database.select_all()
 #database.alta("H", "CBR", "Depo", 1000, 10)
+#database.baja(10)

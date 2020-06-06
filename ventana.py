@@ -48,11 +48,11 @@ cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
 
 #botones
-btnAlta=tk.Button(ventana, text="Realizar ALTA", width=15, command=lambda: obtenerDatos())
+btnAlta=tk.Button(ventana, text="Realizar ALTA", width=15, command=lambda: obtenerDatosA())
 btnAlta.place(x=300, y=75)
 btnBaja=tk.Button(ventana, text="Realizar BAJA", width=15, command=lambda: obtenerId())
 btnBaja.place(x=300, y=105)
-btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: obtenerDatos())
+btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: obtenerDatosC())
 btnCambio.place(x=300, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
@@ -113,7 +113,23 @@ def cargar(id):
 	precioCaja.insert(0, lista[4])
 	cantCaja.insert(0, lista[5])
 
-def obtenerDatos():
+def obtenerDatosA():
+	strID.set(idCaja.get())
+	strMarca.set(marcaCaja.get())
+	strModelo.set(modeCaja.get())
+	strTipo.set(tipoCaja.get())
+	strPrecio.set(precioCaja.get())
+	strCantidad.set(cantCaja.get())
+	if not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get():
+		MB.showerror("Error", "Faltan Datos")
+	elif not strPrecio.get().isdigit() or not strCantidad.get().isdigit():
+		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
+	else:
+		realizarAlta(strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
+		#print(int(strPrecio.get())+int(strCantidad.get()))
+		actualizarT()
+
+def obtenerDatosC():
 	strID.set(idCaja.get())
 	strMarca.set(marcaCaja.get())
 	strModelo.set(modeCaja.get())
@@ -125,15 +141,13 @@ def obtenerDatos():
 	elif not strPrecio.get().isdigit() or not strCantidad.get().isdigit():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
-		realizarAlta(strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
-		#print(int(strPrecio.get())+int(strCantidad.get()))
-		MB.showinfo("Exito", "Alta/Cambio Realizado")
+		realizarCambio(int(strID.get()), strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
 		actualizarT()
 
 def obtenerId():
 	strID.set(idCaja.get())
 	if strID.get():
-		con.DataBase().baja(strID.get())
+		con.DataBase().baja(int(strID.get()))
 		actualizarT();
 		MB.showinfo("Exito", "Baja Realizada")
 	else:
@@ -152,6 +166,13 @@ def limpiar():
 
 def realizarAlta(m, mo, t, p, c):
 	con.DataBase().alta(m, mo, t, p, c)
+	MB.showinfo("Exito", "Alta Realizada")
 
+def realizarCambio(idp, m, mo, t, p, c):
+	con.DataBase().actualizar(idp, m, mo, t, p, c)
+	MB.showinfo("Exito", "Cambio Realizado")
+
+
+lb=actualizarT()
 #//////////////
 ventana.mainloop()
