@@ -85,6 +85,25 @@ lb.column("pre", width=50)
 lb.heading("can", text="Cantidad")
 lb.column("can", width=50)
 
+lb2 = ttk.Treeview(ventana, columns=("mar2", "mod2", "tip2", "cli2", "pre2", "can2", "cos2"));
+lb2.heading("#0", text="ID Venta")
+lb2.column("#0", width=50)
+lb2.heading("mar2", text="Marca")
+lb2.column("mar2", width=50)
+lb2.heading("mod2", text="Modelo")
+lb2.column("mod2", width=50)
+lb2.heading("tip2", text="Tipo")
+lb2.column("tip2", width=50)
+lb2.heading("cli2", text="Cliente")
+lb2.column("cli2", width=50)
+lb2.heading("pre2", text="Precio")
+lb2.column("pre2", width=50)
+lb2.heading("can2", text="Cantidad")
+lb2.column("can2", width=30)
+lb2.heading("cos2", text="Costo")
+lb2.column("cos2", width=50)
+
+
 def actualizarT():
 	lb.delete(*lb.get_children())
 	items = con.DataBase().select_all()
@@ -93,6 +112,15 @@ def actualizarT():
 	lb.place(x=10, y=230, width=600, height=150)
 	lb.selection_remove()
 	return lb
+
+def actualizarTP():
+	lb2.delete(*lb2.get_children())
+	items2 = con.DataBase().select_pedidos()
+	for p2 in items2:
+		lb2.insert("", tk.END, text=p2[0], values=(p2[1], p2[2], p2[3], p2[4], p2[5], p2[6]))
+	lb2.place(x=10, y=430, width=600, height=150)
+	lb2.selection_remove()
+	return lb2
 
 def sacar():
 	try:
@@ -267,5 +295,6 @@ def ventanaVender(id):
 
 
 lb=actualizarT()
+lb2=actualizarTP()
 #//////////////
 ventana.mainloop()

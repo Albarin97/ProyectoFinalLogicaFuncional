@@ -32,6 +32,15 @@ class DataBase:
 			raise e
 		return productos
 
+	def select_pedidos(self):
+		sql = "SELECT * FROM pedidos"
+		try:
+			self.cursor.execute(sql)
+			pedidos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return pedidos
+
 	def alta(self, m, mo, t, p, c):
 		sql = "INSERT INTO productos (marca, modelo, tipo, precio, cantidad) VALUES ('%s', '%s', '%s', %d, %d)"%(m, mo, t, p, c,)
 		try:
