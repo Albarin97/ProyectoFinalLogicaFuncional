@@ -11,7 +11,7 @@ class DataBase:
 
 		self.cursor = self.connection.cursor()
 
-		print("Conexion Exitosa")
+		#print("Conexion Exitosa")
 
 	def select_one(self, idp):
 		sql = "SELECT * FROM productos WHERE idproducto = %d"%(idp,)

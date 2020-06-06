@@ -4,6 +4,14 @@ from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
 
+class vent:
+	def __init__(self):
+		
+
+	def f(self, n):
+		idCaja.insert(0, n)
+		print(n)
+
 #Creacion venta y Configuracion
 venta = tk.Tk()
 venta.iconbitmap("vender.ico")
@@ -66,9 +74,9 @@ direCaja = tk.Entry(venta)
 direCaja.place(x=150, y=300)
 
 #Boton
-img = PhotoImage(file='vender.png')
-btnVender=tk.Button(venta, image=img, width=60, command=lambda: obtenerDatos())
-btnVender.place(x=120, y=350)
+imgi = PhotoImage(file='vender.png')
+btnVen=tk.Button(venta, text="vender", image=imgi, width=60, command=lambda: obtenerDatos())
+btnVen.place(x=120, y=350)
 
 
 #////////////////////////////////

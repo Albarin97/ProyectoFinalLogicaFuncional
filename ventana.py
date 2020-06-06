@@ -56,8 +56,10 @@ btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: 
 btnCambio.place(x=300, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
-btnLimpiar=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
-btnLimpiar.place(x=30, y=385)
+btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
+btnObtener.place(x=30, y=385)
+btnVender=tk.Button(ventana, text="Vender", width=15, command=lambda: vender())
+btnVender.place(x=150, y=385)
 
 #Variables
 strID=tk.StringVar()
@@ -96,13 +98,20 @@ def sacar():
 	try:
 		seleccionado = lb.selection()[0]
 		id = lb.item(seleccionado, option="text")
-		print(id)
+		#print(id)
 		cargar(id)
 	except Exception as e:
 		MB.showerror("Error", "Seleccione un Registro de la Tabla")
 
-def actualizarLB(lb):
-	return lb
+def vender():
+	try:
+		seleccionadoV = lb.selection()[0]
+		id = lb.item(seleccionadoV, option="text")
+		print(id)
+		ventanaVender(id)
+	except Exception as e:
+		print(e)
+		MB.showerror("Error", "Seleccione un Registro de la Tabla ************")
 
 def cargar(id):
 	limpiar()
@@ -172,6 +181,89 @@ def realizarAlta(m, mo, t, p, c):
 def realizarCambio(idp, m, mo, t, p, c):
 	con.DataBase().actualizar(idp, m, mo, t, p, c)
 	MB.showinfo("Exito", "Cambio Realizado")
+
+
+def ventanaVender(id):
+	venta = tk.Tk()
+	venta.iconbitmap("vender.ico")
+	venta.title("AMS Proceso Venta")
+	venta.geometry("300x400")
+	venta.resizable(0, 0)
+	venta.configure(bg="OldLace")
+	#Titulo
+	titulo=tk.Label(venta,text="Albar's Moto Sport", bg="OldLace")
+	titulo.pack(fill=tk.X)
+	etiqueta=tk.Label(venta,text="Menu De Venta", bg="OldLace")
+	etiqueta.pack()
+
+	#etiquetas
+	idLabel=tk.Label(venta,text="ID", bg="OldLace")
+	idLabel.place(x=30, y=60)
+	marcaLabel=tk.Label(venta,text="Marca", bg="OldLace")
+	marcaLabel.place(x=30, y=85)
+	modeloLabel=tk.Label(venta,text="Modelo", bg="OldLace")
+	modeloLabel.place(x=30, y=110)
+	tipoLabel=tk.Label(venta,text="Tipo", bg="OldLace")
+	tipoLabel.place(x=30, y=135)
+	precioLabel=tk.Label(venta,text="Precio", bg="OldLace")
+	precioLabel.place(x=30, y=160)
+	cantidadLabel=tk.Label(venta,text="Cantidad", bg="OldLace")
+	cantidadLabel.place(x=30, y=185)
+	divLabel=tk.Label(venta,text="_____________________________________________________________", bg="OldLace")
+	divLabel.place(x=0, y=200)
+	clienteLabel=tk.Label(venta,text="Cliente", bg="OldLace")
+	clienteLabel.place(x=30, y=225)
+	cantidadLabel=tk.Label(venta,text="Cantidad", bg="OldLace")
+	cantidadLabel.place(x=30, y=250)
+	telefonoLabel=tk.Label(venta,text="Telefono", bg="OldLace")
+	telefonoLabel.place(x=30, y=275)
+	direcLabel=tk.Label(venta,text="Direccion", bg="OldLace")
+	direcLabel.place(x=30, y=300)
+
+
+	#cajas
+	listav = con.DataBase().select_one(id)
+	
+	idCajaV = tk.Entry(venta)
+	idCajaV.place(x=150, y=60)
+	marcaCajaV = tk.Entry(venta)
+	marcaCajaV.place(x=150, y=85)
+	modeCajaV = tk.Entry(venta)
+	modeCajaV.place(x=150, y=110)
+	tipoCajaV = tk.Entry(venta)
+	tipoCajaV.place(x=150, y=135)
+	precioCajaV = tk.Entry(venta)
+	precioCajaV.place(x=150, y=160)
+	cantCajaV = tk.Entry(venta)
+	cantCajaV.place(x=150, y=185)
+	
+	idCajaV.insert(0, listav[0])
+	marcaCajaV.insert(0, listav[1])
+	modeCajaV.insert(0, listav[2])
+	tipoCajaV.insert(0, listav[3])
+	precioCajaV.insert(0, listav[4])
+	cantCajaV.insert(0, listav[5])
+
+	clienCaja = tk.Entry(venta)
+	clienCaja.place(x=150, y=225)
+	cantSpn = tk.Spinbox(venta, from_=0, to=1000, width=18, state='readonly')
+	cantSpn.place(x=150, y=250)
+	telCaja = tk.Entry(venta)
+	telCaja.place(x=150, y=275)
+	direCaja = tk.Entry(venta)
+	direCaja.place(x=150, y=300)
+
+	#Boton
+	imgVenta = PhotoImage(file='login.png')
+	btnVen=tk.Button(venta, text="vender", command=lambda: test())
+	btnVen.place(x=120, y=350)
+
+	def test():
+		print(cantSpn.get())
+
+
+	#////////////////////////////////
+	venta.mainloop()
 
 
 lb=actualizarT()
