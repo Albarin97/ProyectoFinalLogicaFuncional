@@ -111,7 +111,7 @@ def vender():
 		ventanaVender(id)
 	except Exception as e:
 		print(e)
-		MB.showerror("Error", "Seleccione un Registro de la Tabla ************")
+		MB.showerror("Error", "Seleccione un Articulo a Vender")
 
 def cargar(id):
 	limpiar()
@@ -255,13 +255,13 @@ def ventanaVender(id):
 
 	#Boton
 	imgVenta = PhotoImage(file='login.png')
-	btnVen=tk.Button(venta, text="vender", command=lambda: test())
+	btnVen=tk.Button(venta, text="vender", command=lambda: realizarVenta())
 	btnVen.place(x=120, y=350)
 
-	def test():
-		print(cantSpn.get())
-
-
+	def realizarVenta():
+		con.DataBase().venta(int(idCajaV.get()), clienCaja.get(), int(cantSpn.get()), (int(cantSpn.get())*int(precioCajaV.get())), telCaja.get(), direCaja.get())
+		MB.showinfo("Exito", "Venta Realizada")
+		venta.destroy()
 	#////////////////////////////////
 	venta.mainloop()
 

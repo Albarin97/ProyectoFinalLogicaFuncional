@@ -57,7 +57,13 @@ class DataBase:
 		except Exception as e:
 			raise e
 
-	#def cambio
+	def venta(self, idp, cl, ca, co, t, d):
+		sql = "INSERT INTO ventas (idproducto, cliente, cantidad, costo, telefono, direccion) VALUES (%d, '%s', %d, %d, '%s', '%s')"%(idp, cl, ca, co, t, d,)
+		try:
+			self.cursor.execute(sql)
+			self.connection.commit()
+		except Exception as e:
+			raise e
 
 
 #database = DataBase()
