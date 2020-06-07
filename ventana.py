@@ -31,16 +31,22 @@ precioLabel.place(x=30, y=160)
 cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
 cantidadLabel.place(x=30, y=185)
 
+proLabel=tk.Label(ventana,text="PRODUCTOS DISPONIBLES", bg="OldLace")
+proLabel.place(x=460, y=210)
+venLabel=tk.Label(ventana,text="VENTAS REALIZADAS", bg="OldLace")
+venLabel.place(x=490, y=410)
+
+
 #cajas
 idCaja = tk.Entry(ventana)
 idCaja.place(x=150, y=60)
 marcaCaja = ttk.Combobox(ventana, state="readonly", width=17)
-marcaCaja["values"] = ["Python", "C", "C++", "Java"]
+marcaCaja["values"] = ["Italika", "BMW", "Honda", "Bajaj", "Yamaha", "Suzuki"]
 marcaCaja.place(x=150, y=85)
 modeCaja = tk.Entry(ventana)
 modeCaja.place(x=150, y=110)
 tipoCaja = ttk.Combobox(ventana, state="readonly", width=17)
-tipoCaja["values"] = ["Python", "C", "C++", "Java"]
+tipoCaja["values"] = ["Doble Proposito", "Enduro", "Scooter", "Deportiva", "Crucero"]
 tipoCaja.place(x=150, y=135)
 precioCaja = tk.Entry(ventana)
 precioCaja.place(x=150, y=160)
@@ -56,10 +62,20 @@ btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: 
 btnCambio.place(x=300, y=135)
 btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
 btnLimpiar.place(x=300, y=165)
+
+img = PhotoImage(file='vender.png')
+img2 = PhotoImage(file='actualizar.png')
 btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnObtener.place(x=30, y=385)
-btnVender=tk.Button(ventana, text="Vender", width=15, command=lambda: vender())
+btnVender=tk.Button(ventana, text="Vender", image=img, width=40, command=lambda: vender())
 btnVender.place(x=150, y=385)
+def azr():
+	actualizarT()
+	actualizarTP()
+btnActualizar=tk.Button(ventana, text="Actualizar", image=img2, width=40, command=lambda: azr())
+btnActualizar.place(x=200, y=385)
+
+
 
 #Variables
 strID=tk.StringVar()
@@ -164,8 +180,8 @@ def obtenerDatosA():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
 		realizarAlta(strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
-		#print(int(strPrecio.get())+int(strCantidad.get()))
 		actualizarT()
+		actualizarTP()
 
 def obtenerDatosC():
 	strID.set(idCaja.get())
@@ -181,12 +197,14 @@ def obtenerDatosC():
 	else:
 		realizarCambio(int(strID.get()), strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
 		actualizarT()
+		actualizarTP()
 
 def obtenerId():
 	strID.set(idCaja.get())
 	if strID.get():
 		con.DataBase().baja(int(strID.get()))
 		actualizarT();
+		actualizarTP()
 		MB.showinfo("Exito", "Baja Realizada")
 	else:
 		MB.showerror("Error", "Introduce un ID")
@@ -290,6 +308,7 @@ def ventanaVender(id):
 		con.DataBase().venta(int(idCajaV.get()), clienCaja.get(), int(cantSpn.get()), (int(cantSpn.get())*int(precioCajaV.get())), telCaja.get(), direCaja.get())
 		MB.showinfo("Exito", "Venta Realizada")
 		venta.destroy()
+		actualizarTP()
 	#////////////////////////////////
 	venta.mainloop()
 
