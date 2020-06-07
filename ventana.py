@@ -4,11 +4,16 @@ from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
 
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from pandas import DataFrame
+
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
 ventana.iconbitmap("Logo.ico")
 ventana.title("Menu Albar's Moto Sport")
-ventana.geometry("1000x600")
+ventana.geometry("1140x600")
 ventana.configure(bg="OldLace")
 
 #Titulos
@@ -16,6 +21,7 @@ titulo=tk.Label(ventana,text="Albar's Moto Sport", bg="OldLace")
 etiqueta=tk.Label(ventana,text="Bienvenido Al Sistema ABCC", bg="OldLace")
 titulo.pack(fill=tk.X)
 etiqueta.pack()
+
 
 #etiquetas
 idLabel=tk.Label(ventana,text="ID", bg="OldLace")
@@ -118,6 +124,19 @@ lb2.heading("can2", text="Cantidad")
 lb2.column("can2", width=30)
 lb2.heading("cos2", text="Costo")
 lb2.column("cos2", width=50)
+
+#Gráfico 
+Data1 = {'Motos': ['DP','Enduro','Scooter','Deportiva','Crucero'], 'Cantidad': [100,50,75,75,75]}
+df1 = DataFrame(Data1, columns= ['Motos', 'Cantidad'])
+df1 = df1[['Motos', 'Cantidad']].groupby('Motos').sum()
+
+#Crear Gráfico de barras:
+grafico1 = plt.Figure(figsize=(8,7), dpi=60)
+barras = grafico1.add_subplot(111)
+bar1 = FigureCanvasTkAgg(grafico1, ventana)
+bar1.get_tk_widget().place(x=630, y=160)
+df1.plot(kind='bar', legend=True, ax=barras)
+barras.set_title('Cantidades de Motos por Tipo')
 
 
 def actualizarT():
