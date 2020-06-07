@@ -74,7 +74,14 @@ class DataBase:
 		except Exception as e:
 			raise e
 
-
+	def graficaTipo(self):
+		sql="SELECT tipo, cantidad+(SELECT COUNT(tipo)) FROM productos GROUP BY tipo"
+		try:
+			self.cursor.execute(sql)
+			datos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return datos
 #database = DataBase()
 #database.select_one("A")
 #database.select_all()

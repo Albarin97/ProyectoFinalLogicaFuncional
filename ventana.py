@@ -125,8 +125,19 @@ lb2.column("can2", width=30)
 lb2.heading("cos2", text="Costo")
 lb2.column("cos2", width=50)
 
+caniGraf = con.DataBase().graficaTipo()
 #Gráfico 
-Data1 = {'Motos': ['DP','Enduro','Scooter','Deportiva','Crucero'], 'Cantidad': [100,50,75,75,75]}
+print("------------------------")
+print(caniGraf)
+print("------------------------")
+A = []
+B = []
+
+for row in caniGraf:
+	A.append(row[0])
+	B.append(row[1])
+print(A)
+Data1 = {'Motos': A, 'Cantidad': B}
 df1 = DataFrame(Data1, columns= ['Motos', 'Cantidad'])
 df1 = df1[['Motos', 'Cantidad']].groupby('Motos').sum()
 
