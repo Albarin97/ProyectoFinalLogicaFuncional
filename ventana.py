@@ -46,6 +46,10 @@ precioLabel.place(x=30, y=160)
 cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
 cantidadLabel.place(x=30, y=185)
 
+imgLogo = PhotoImage(file='icos/Logo.png')
+logoLabel = tk.Label(ventana, image=imgLogo, text="Logo", bg="OldLace")
+logoLabel.place(x=770, y=10)
+
 proLabel=tk.Label(ventana,text="PRODUCTOS DISPONIBLES", bg="OldLace")
 proLabel.place(x=460, y=210)
 venLabel=tk.Label(ventana,text="VENTAS REALIZADAS", bg="OldLace")
@@ -92,6 +96,7 @@ btnVender.place(x=150, y=385)
 def azr():
 	actualizarT()
 	actualizarTP()
+	grafico(con.DataBase().graficaTipo())
 btnActualizar=tk.Button(ventana, text="Actualizar", image=img2, width=40, command=lambda: azr())
 btnActualizar.place(x=200, y=385)
 
@@ -137,25 +142,25 @@ lb2.column("can2", width=30)
 lb2.heading("cos2", text="Costo")
 lb2.column("cos2", width=50)
 
-#Gráfico 
-caniGraf = con.DataBase().graficaTipo()
-A = []
-B = []
-for row in caniGraf:
-	A.append(int(row[0]))
-	B.append(row[1])
+#Gráfico
+def grafico(caniGraf):
+	A = []
+	B = []
+	for row in caniGraf:
+		A.append(int(row[0]))
+		B.append(row[1])
 
-Data1 = {'Motos': B, 'Cantidad': A}
-df1 = DataFrame(Data1, columns= ['Motos', 'Cantidad'])
-df1 = df1[['Motos', 'Cantidad']].groupby('Motos').sum()
+	Data1 = {'Motos': B, 'Cantidad': A}
+	df1 = DataFrame(Data1, columns= ['Motos', 'Cantidad'])
+	df1 = df1[['Motos', 'Cantidad']].groupby('Motos').sum()
 
-#Crear Gráfico de barras:
-grafico1 = plt.Figure(figsize=(8,7), dpi=60)
-barras = grafico1.add_subplot(111)
-bar1 = FigureCanvasTkAgg(grafico1, ventana)
-bar1.get_tk_widget().place(x=630, y=160)
-df1.plot(kind='bar', legend=True, ax=barras)
-barras.set_title('Cantidades de Motos por Tipo')
+	#Crear Gráfico de barras:
+	grafico1 = plt.Figure(figsize=(8,7), dpi=60)
+	barras = grafico1.add_subplot(111)
+	bar1 = FigureCanvasTkAgg(grafico1, ventana)
+	bar1.get_tk_widget().place(x=630, y=160)
+	df1.plot(kind='bar', legend=True, ax=barras)
+	barras.set_title('Cantidades de Motos por Tipo')
 
 def reportes():
 	print("Generando Reporte")
@@ -221,8 +226,7 @@ def obtenerDatosA():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
 		realizarAlta(strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
-		actualizarT()
-		actualizarTP()
+		azr()
 
 def obtenerDatosC():
 	strID.set(idCaja.get())
@@ -237,8 +241,7 @@ def obtenerDatosC():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
 	else:
 		realizarCambio(int(strID.get()), strMarca.get(), strModelo.get(), strTipo.get(), int(strPrecio.get()), int(strCantidad.get()))
-		actualizarT()
-		actualizarTP()
+		azr()
 
 def obtenerId():
 	strID.set(idCaja.get())
@@ -349,11 +352,11 @@ def ventanaVender(id):
 		con.DataBase().venta(int(idCajaV.get()), clienCaja.get(), int(cantSpn.get()), (int(cantSpn.get())*int(precioCajaV.get())), telCaja.get(), direCaja.get())
 		MB.showinfo("Exito", "Venta Realizada")
 		venta.destroy()
-		actualizarTP()
+		azr()
 	#////////////////////////////////
 	venta.mainloop()
 
-
+grafico(con.DataBase().graficaTipo())
 lb=actualizarT()
 lb2=actualizarTP()
 #//////////////
