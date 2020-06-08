@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
 from tkinter import *
-from repos import *
+import repos 
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
@@ -13,24 +13,17 @@ from pandas import DataFrame
 
 #Creacion ventana y Configuracion
 ventana = tk.Tk()
-ventana.iconbitmap("Logo.ico")
+ventana.iconbitmap("icos/Logo.ico")
 ventana.title("Menu Albar's Moto Sport")
 ventana.geometry("1140x620")
 ventana.configure(bg="OldLace")
 
 #MenuBar
-menubar = Menu(ventana,font=("Monsterrat",16))
-ventana.config(menu=menubar)
-graficas = Menu(menubar,tearoff=0)
-graficas.add_command(label="Generar Grafica")
-reportes = Menu(menubar,tearoff=0)
-reportes.add_command(label="Generar Reportes")
-menubar.add_cascade(label="Graficas", menu=graficas)
-menubar.add_cascade(label="Reportes", menu=reportes, command=reportes)
-
-def reportes():
-	print("Generando Reporte")
-	repos.export_to_pdf("reporteVentas.pdf")
+#menubar = Menu(ventana,font=("Monsterrat",16))
+#ventana.config(menu=menubar)
+#reportes = Menu(menubar,tearoff=0)
+#reportes.add_command(label="Generar Reportes")
+#menubar.add_cascade(label="Reportes", menu=reportes, command= reportes)
 
 #Titulos
 titulo=tk.Label(ventana,text="Albar's Moto Sport", bg="OldLace")
@@ -82,11 +75,16 @@ btnBaja=tk.Button(ventana, text="Realizar BAJA", width=15, command=lambda: obten
 btnBaja.place(x=300, y=105)
 btnCambio=tk.Button(ventana, text="Realizar CAMBIOS", width=15, command=lambda: obtenerDatosC())
 btnCambio.place(x=300, y=135)
-btnLimpiar=tk.Button(ventana, text="Limpiar", width=15, command=lambda: limpiar())
-btnLimpiar.place(x=300, y=165)
+icoLimpiar = PhotoImage(file='icos/limpiar.png')
+btnLimpiar=tk.Button(ventana, text="Limpiar", image=icoLimpiar, width=50, command=lambda: limpiar())
+btnLimpiar.place(x=325, y=165)
+icopdf = PhotoImage(file='icos/pdf.png')
+btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
+btnPDF.place(x=450, y=80)
 
-img = PhotoImage(file='vender.png')
-img2 = PhotoImage(file='actualizar.png')
+
+img = PhotoImage(file='icos/vender.png')
+img2 = PhotoImage(file='icos/actualizar.png')
 btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
 btnObtener.place(x=30, y=385)
 btnVender=tk.Button(ventana, text="Vender", image=img, width=40, command=lambda: vender())
@@ -123,7 +121,7 @@ lb.column("pre", width=50)
 lb.heading("can", text="Cantidad")
 lb.column("can", width=50)
 
-lb2 = ttk.Treeview(ventana, columns=("mar2", "mod2", "tip2", "cli2", "pre2", "can2", "cos2"));
+lb2 = ttk.Treeview(ventana, columns=("mar2", "mod2", "tip2", "cli2", "can2", "cos2"));
 lb2.heading("#0", text="ID Venta")
 lb2.column("#0", width=50)
 lb2.heading("mar2", text="Marca")
@@ -134,8 +132,6 @@ lb2.heading("tip2", text="Tipo")
 lb2.column("tip2", width=50)
 lb2.heading("cli2", text="Cliente")
 lb2.column("cli2", width=50)
-lb2.heading("pre2", text="Precio")
-lb2.column("pre2", width=50)
 lb2.heading("can2", text="Cantidad")
 lb2.column("can2", width=30)
 lb2.heading("cos2", text="Costo")
@@ -161,6 +157,9 @@ bar1.get_tk_widget().place(x=630, y=160)
 df1.plot(kind='bar', legend=True, ax=barras)
 barras.set_title('Cantidades de Motos por Tipo')
 
+def reportes():
+	print("Generando Reporte")
+	repos.export_to_pdf()
 
 def actualizarT():
 	lb.delete(*lb.get_children())
@@ -273,7 +272,7 @@ def realizarCambio(idp, m, mo, t, p, c):
 
 def ventanaVender(id):
 	venta = tk.Tk()
-	venta.iconbitmap("vender.ico")
+	venta.iconbitmap("icos/vender.ico")
 	venta.title("AMS Proceso Venta")
 	venta.geometry("300x400")
 	venta.resizable(0, 0)
@@ -342,7 +341,7 @@ def ventanaVender(id):
 	direCaja.place(x=150, y=300)
 
 	#Boton
-	imgVenta = PhotoImage(file='login.png')
+	imgVenta = PhotoImage(file='icos/login.png')
 	btnVen=tk.Button(venta, text="vender", command=lambda: realizarVenta())
 	btnVen.place(x=120, y=350)
 

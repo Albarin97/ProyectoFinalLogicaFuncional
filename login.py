@@ -5,7 +5,7 @@ from tkinter import PhotoImage
 
 #Creacion login y Configuracion
 login = tk.Tk()
-login.iconbitmap("logear.ico")
+login.iconbitmap("icos/logear.ico")
 login.title("Login")
 login.geometry("300x300")
 login.configure(bg="OldLace")
@@ -29,7 +29,7 @@ conCaja=tk.Entry(login,show="*")
 conCaja.place(x=100, y=180)
 
 #boton
-img = PhotoImage(file='login.png')
+img = PhotoImage(file='icos/login.png')
 btnIniciar=tk.Button(login, image=img, text="Iniciar", width=60, command=lambda: obtenerDatos())
 btnIniciar.place(x=130, y=250)
 

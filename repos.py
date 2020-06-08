@@ -11,8 +11,8 @@ def grouper(iterable, n):
     return itertools.zip_longest(*args)
 def export_to_pdf():
 
-    data = [("ID Venta", "Marca", "Modelo", "Tipo", "Cliente", "Cantidad", "Costo")]
-    registros = con.DataBase().select_pedidos()
+    data = [("ID Venta", "ID Producto", "Cliente", "Cantidad", "Costo", "Telefono", "Direccion")]
+    registros = con.DataBase().select_ventas()
     for row in registros:
         data.append((str(row[0]),str(row[1]),str(row[2]),str(row[3]),str(row[4]),str(row[5]),str(row[6])))
 
@@ -29,7 +29,7 @@ def export_to_pdf():
     # Space between rows.
     padding = 15
     
-    xlist = [x + x_offset for x in [0, 60, 200, 250, 300, 350, 400, 480]]
+    xlist = [x + x_offset for x in [0, 60, 125, 220, 270, 320, 400, 500]]
     ylist = [h - y_offset - i*padding for i in range(max_rows_per_page + 1)]
     
     for rows in grouper(data, max_rows_per_page):
@@ -40,6 +40,5 @@ def export_to_pdf():
                 c.drawString(x + 2, y - padding + 3, str(cell))
         c.showPage()
     c.save()
-    wb.open_new('C:/Users/albar/Desktop/ProyectoLogicaFuncional/reportes/ventas.pdf')
-
-export_to_pdf()
+    wb.open_new("C:\\Users\\albar\\Desktop\\ProyectoLogicaFuncional\\ProyectoFinalLogicaFuncional\\reportes\\ventas.pdf")
+    
