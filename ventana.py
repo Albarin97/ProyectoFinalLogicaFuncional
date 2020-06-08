@@ -3,6 +3,8 @@ from tkinter import messagebox as MB
 from tkinter import ttk
 from tkinter import PhotoImage
 import conexion as con
+from tkinter import *
+from repos import *
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.figure import Figure
@@ -13,8 +15,22 @@ from pandas import DataFrame
 ventana = tk.Tk()
 ventana.iconbitmap("Logo.ico")
 ventana.title("Menu Albar's Moto Sport")
-ventana.geometry("1140x600")
+ventana.geometry("1140x620")
 ventana.configure(bg="OldLace")
+
+#MenuBar
+menubar = Menu(ventana,font=("Monsterrat",16))
+ventana.config(menu=menubar)
+graficas = Menu(menubar,tearoff=0)
+graficas.add_command(label="Generar Grafica")
+reportes = Menu(menubar,tearoff=0)
+reportes.add_command(label="Generar Reportes")
+menubar.add_cascade(label="Graficas", menu=graficas)
+menubar.add_cascade(label="Reportes", menu=reportes, command=reportes)
+
+def reportes():
+	print("Generando Reporte")
+	repos.export_to_pdf("reporteVentas.pdf")
 
 #Titulos
 titulo=tk.Label(ventana,text="Albar's Moto Sport", bg="OldLace")
@@ -125,19 +141,15 @@ lb2.column("can2", width=30)
 lb2.heading("cos2", text="Costo")
 lb2.column("cos2", width=50)
 
-caniGraf = con.DataBase().graficaTipo()
 #Gráfico 
-print("------------------------")
-print(caniGraf)
-print("------------------------")
+caniGraf = con.DataBase().graficaTipo()
 A = []
 B = []
-
 for row in caniGraf:
-	A.append(row[0])
+	A.append(int(row[0]))
 	B.append(row[1])
-print(A)
-Data1 = {'Motos': A, 'Cantidad': B}
+
+Data1 = {'Motos': B, 'Cantidad': A}
 df1 = DataFrame(Data1, columns= ['Motos', 'Cantidad'])
 df1 = df1[['Motos', 'Cantidad']].groupby('Motos').sum()
 

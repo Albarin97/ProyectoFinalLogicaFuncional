@@ -75,7 +75,7 @@ class DataBase:
 			raise e
 
 	def graficaTipo(self):
-		sql="SELECT tipo, cantidad+(SELECT COUNT(tipo)) FROM productos GROUP BY tipo"
+		sql="SELECT SUM(cantidad), tipo FROM productos GROUP BY tipo;"
 		try:
 			self.cursor.execute(sql)
 			datos = self.cursor.fetchall()
