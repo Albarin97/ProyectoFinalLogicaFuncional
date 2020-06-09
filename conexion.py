@@ -32,6 +32,15 @@ class DataBase:
 			raise e
 		return productos
 
+	def select_filtro(self, x, y):
+		sql = "SELECT * FROM productos WHERE %s LIKE '%%%s%%'"%(x, y,)
+		try:
+			self.cursor.execute(sql)
+			filtrado = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return filtrado
+
 	def select_pedidos(self):
 		sql = "SELECT * FROM pedidos"
 		try:
@@ -77,6 +86,7 @@ class DataBase:
 
 	def venta(self, idp, cl, ca, co, t, d):
 		sql = "INSERT INTO ventas (idproducto, cliente, cantidad, costo, telefono, direccion) VALUES (%d, '%s', %d, %d, '%s', '%s')"%(idp, cl, ca, co, t, d,)
+
 		try:
 			self.cursor.execute(sql)
 			self.connection.commit()

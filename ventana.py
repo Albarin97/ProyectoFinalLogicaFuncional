@@ -45,6 +45,8 @@ precioLabel=tk.Label(ventana,text="Precio", bg="OldLace")
 precioLabel.place(x=30, y=160)
 cantidadLabel=tk.Label(ventana,text="Cantidad", bg="OldLace")
 cantidadLabel.place(x=30, y=185)
+filtroLabel=tk.Label(ventana,text="Buscar", bg="OldLace")
+filtroLabel.place(x=30, y=210)
 
 imgLogo = PhotoImage(file='icos/Logo.png')
 logoLabel = tk.Label(ventana, image=imgLogo, text="Logo", bg="OldLace")
@@ -53,7 +55,7 @@ logoLabel.place(x=770, y=10)
 proLabel=tk.Label(ventana,text="PRODUCTOS DISPONIBLES", bg="OldLace")
 proLabel.place(x=460, y=210)
 venLabel=tk.Label(ventana,text="VENTAS REALIZADAS", bg="OldLace")
-venLabel.place(x=490, y=410)
+venLabel.place(x=460, y=410)
 
 
 #cajas
@@ -71,7 +73,11 @@ precioCaja = tk.Entry(ventana)
 precioCaja.place(x=150, y=160)
 cantCaja = tk.Entry(ventana)
 cantCaja.place(x=150, y=185)
-
+buscarCaja = tk.Entry(ventana)
+buscarCaja.place(x=100, y=210)
+buscarCB = ttk.Combobox(ventana, state="readonly", width=15)
+buscarCB["values"] = ["IdProducto", "Marca", "Modelo", "Tipo"]
+buscarCB.place(x=230, y=210)
 #botones
 btnAlta=tk.Button(ventana, text="Realizar ALTA", width=15, command=lambda: obtenerDatosA())
 btnAlta.place(x=300, y=75)
@@ -85,6 +91,9 @@ btnLimpiar.place(x=325, y=165)
 icopdf = PhotoImage(file='icos/pdf.png')
 btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
 btnPDF.place(x=450, y=80)
+icofil = PhotoImage(file='icos/filtrar.png')
+btnBuscar=tk.Button(ventana, text="Limpiar", image=icofil, width=30, command=lambda: filtrar())
+btnBuscar.place(x=350, y=205)
 
 
 img = PhotoImage(file='icos/vender.png')
@@ -166,12 +175,24 @@ def reportes():
 	print("Generando Reporte")
 	repos.export_to_pdf()
 
+def filtrar():
+	if not buscarCaja.get() or not buscarCB.get():
+		MB.showerror("Error", "Debes introducir los datos a filtrar")
+	else:
+		lb.delete(*lb.get_children())
+		itemsf = con.DataBase().select_filtro(buscarCB.get(), buscarCaja.get())
+		for pf in itemsf:
+			lb.insert("", tk.END, text=pf[0], values=(pf[1], pf[2], pf[3], pf[4], pf[5]))
+		lb.place(x=10, y=240, width=600, height=150)
+		lb.selection_remove()
+		return lb
+
 def actualizarT():
 	lb.delete(*lb.get_children())
 	items = con.DataBase().select_all()
 	for p in items:
 		lb.insert("", tk.END, text=p[0], values=(p[1], p[2], p[3], p[4], p[5]))
-	lb.place(x=10, y=230, width=600, height=150)
+	lb.place(x=10, y=240, width=600, height=150)
 	lb.selection_remove()
 	return lb
 
@@ -220,7 +241,7 @@ def obtenerDatosA():
 	strTipo.set(tipoCaja.get())
 	strPrecio.set(precioCaja.get())
 	strCantidad.set(cantCaja.get())
-	if not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get():
+	if not strMarca.get() or not strModelo.get() or not strTipo.get() or not strPrecio.get() or not strCantidad.get() or int(strCantidad.get())==0:
 		MB.showerror("Error", "Faltan Datos")
 	elif not strPrecio.get().isdigit() or not strCantidad.get().isdigit():
 		MB.showerror("Error", "Precio y Cantidad Deben Llevar Solo NUMEROS")
@@ -349,10 +370,17 @@ def ventanaVender(id):
 	btnVen.place(x=120, y=350)
 
 	def realizarVenta():
-		con.DataBase().venta(int(idCajaV.get()), clienCaja.get(), int(cantSpn.get()), (int(cantSpn.get())*int(precioCajaV.get())), telCaja.get(), direCaja.get())
-		MB.showinfo("Exito", "Venta Realizada")
-		venta.destroy()
-		azr()
+		if not idCajaV.get() or not marcaCajaV.get() or not modeCajaV.get() or not tipoCajaV.get() or not precioCajaV.get() or not cantCajaV.get() or not clienCaja.get() or int(cantSpn.get())==0 or not telCaja.get() or not direCaja.get():
+			MB.showinfo("Error", "Faltan Datos")
+		else:
+			if int(cantCajaV.get())<int(cantSpn.get()):
+				MB.showinfo("Error", "No contamos con la cantidad Solicitada")
+			else:
+				con.DataBase().actualizar(int(idCajaV.get()), marcaCajaV.get(), modeCajaV.get(), tipoCajaV.get(), int(precioCajaV.get()), (int(cantCajaV.get())-int(cantSpn.get())))
+				con.DataBase().venta(int(idCajaV.get()), clienCaja.get(), int(cantSpn.get()), (int(cantSpn.get())*int(precioCajaV.get())), telCaja.get(), direCaja.get())
+				MB.showinfo("Exito", "Venta Realizada")
+				venta.destroy()
+				azr()
 	#////////////////////////////////
 	venta.mainloop()
 
