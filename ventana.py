@@ -53,7 +53,7 @@ logoLabel = tk.Label(ventana, image=imgLogo, text="Logo", bg="OldLace")
 logoLabel.place(x=770, y=10)
 
 proLabel=tk.Label(ventana,text="PRODUCTOS DISPONIBLES", bg="OldLace")
-proLabel.place(x=460, y=210)
+proLabel.place(x=460, y=200)
 venLabel=tk.Label(ventana,text="VENTAS REALIZADAS", bg="OldLace")
 venLabel.place(x=460, y=410)
 
@@ -89,25 +89,40 @@ icoLimpiar = PhotoImage(file='icos/limpiar.png')
 btnLimpiar=tk.Button(ventana, text="Limpiar", image=icoLimpiar, width=50, command=lambda: limpiar())
 btnLimpiar.place(x=325, y=165)
 icopdf = PhotoImage(file='icos/pdf.png')
-btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=30, command=lambda: reportes())
+btnPDF=tk.Button(ventana, text="Limpiar", image=icopdf, width=60, command=lambda: reportes())
 btnPDF.place(x=450, y=80)
 icofil = PhotoImage(file='icos/filtrar.png')
-btnBuscar=tk.Button(ventana, text="Limpiar", image=icofil, width=30, command=lambda: filtrar())
+btnBuscar=tk.Button(ventana, image=icofil, width=30, command=lambda: filtrar())
 btnBuscar.place(x=350, y=205)
+
+icoArr = PhotoImage(file='icos/arriba.png')
+icoAb = PhotoImage(file='icos/abajo.png')
+preArr=tk.Button(ventana, image=icoArr, width=20, command=lambda: preAr())
+preArr.place(x=420, y=220)
+preAb=tk.Button(ventana, image=icoAb, width=20, command=lambda: preAb())
+preAb.place(x=450, y=220)
+
+canArr=tk.Button(ventana, image=icoArr, width=20, command=lambda: canAr())
+canArr.place(x=530, y=220)
+canAb=tk.Button(ventana, image=icoAb, width=20, command=lambda: canAb())
+canAb.place(x=560, y=220)
 
 
 img = PhotoImage(file='icos/vender.png')
 img2 = PhotoImage(file='icos/actualizar.png')
 btnObtener=tk.Button(ventana, text="Obtener", width=15, command=lambda: sacar())
-btnObtener.place(x=30, y=385)
+btnObtener.place(x=30, y=395)
 btnVender=tk.Button(ventana, text="Vender", image=img, width=40, command=lambda: vender())
-btnVender.place(x=150, y=385)
+btnVender.place(x=150, y=395)
 def azr():
 	actualizarT()
 	actualizarTP()
 	grafico(con.DataBase().graficaTipo())
 btnActualizar=tk.Button(ventana, text="Actualizar", image=img2, width=40, command=lambda: azr())
-btnActualizar.place(x=200, y=385)
+btnActualizar.place(x=200, y=395)
+
+btnCorte=tk.Button(ventana, text="Corte Semanal", width=15, command=lambda: ventanaCorteSemana())
+btnCorte.place(x=10, y=590)
 
 
 
@@ -186,6 +201,39 @@ def filtrar():
 		lb.place(x=10, y=240, width=600, height=150)
 		lb.selection_remove()
 		return lb
+
+def preAr():
+	lb.delete(*lb.get_children())
+	itemspa = con.DataBase().select_pa()
+	for ppa in itemspa:
+		lb.insert("", tk.END, text=ppa[0], values=(ppa[1], ppa[2], ppa[3], ppa[4], ppa[5]))
+	lb.place(x=10, y=240, width=600, height=150)
+	lb.selection_remove()
+	return lb
+def preAb():
+	lb.delete(*lb.get_children())
+	itemspb = con.DataBase().select_pb()
+	for ppb in itemspb:
+		lb.insert("", tk.END, text=ppb[0], values=(ppb[1], ppb[2], ppb[3], ppb[4], ppb[5]))
+	lb.place(x=10, y=240, width=600, height=150)
+	lb.selection_remove()
+	return lb
+def canAr():
+	lb.delete(*lb.get_children())
+	itemsca = con.DataBase().select_ca()
+	for pca in itemsca:
+		lb.insert("", tk.END, text=pca[0], values=(pca[1], pca[2], pca[3], pca[4], pca[5]))
+	lb.place(x=10, y=240, width=600, height=150)
+	lb.selection_remove()
+	return lb
+def canAb():
+	lb.delete(*lb.get_children())
+	itemscb = con.DataBase().select_cb()
+	for pcb in itemscb:
+		lb.insert("", tk.END, text=pcb[0], values=(pcb[1], pcb[2], pcb[3], pcb[4], pcb[5]))
+	lb.place(x=10, y=240, width=600, height=150)
+	lb.selection_remove()
+	return lb
 
 def actualizarT():
 	lb.delete(*lb.get_children())
@@ -271,6 +319,7 @@ def obtenerId():
 		actualizarT();
 		actualizarTP()
 		MB.showinfo("Exito", "Baja Realizada")
+		azr()
 	else:
 		MB.showerror("Error", "Introduce un ID")
 
@@ -293,6 +342,34 @@ def realizarCambio(idp, m, mo, t, p, c):
 	con.DataBase().actualizar(idp, m, mo, t, p, c)
 	MB.showinfo("Exito", "Cambio Realizado")
 
+def ventanaCorteSemana():
+	corte = tk.Tk()
+	corte.iconbitmap("icos/vender.ico")
+	corte.title("AMS Corte Semanal")
+	corte.geometry("300x180")
+	corte.resizable(0, 0)
+	corte.configure(bg="OldLace")
+	titulo=tk.Label(corte,text="Albar's Moto Sport", bg="OldLace")
+	titulo.pack(fill=tk.X)
+	etiqueta=tk.Label(corte,text="Estas a punto de vaciar los registros de venta, \nesto solo se recomienda hacer una vez por semana", bg="OldLace")
+	etiqueta.pack()
+	etiqueta2=tk.Label(corte, text="¿Seguro que deseas Continuar?", bg=("Red"))
+	etiqueta2.pack()
+	btnSi=tk.Button(corte, text="Si", width=15, command=lambda: si())
+	btnSi.place(x=10, y=100)
+	btnNo=tk.Button(corte, text="No", width=15, command=lambda: no())
+	btnNo.place(x=170, y=100)
+
+	def si():
+		reportes()
+		con.DataBase().vaciarVentas()
+		corte.destroy()
+		azr()
+
+	def no():
+		corte.destroy()
+	
+	corte.mainloop()
 
 def ventanaVender(id):
 	venta = tk.Tk()

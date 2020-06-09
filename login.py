@@ -47,7 +47,7 @@ def obtenerDatos():
 	elif not strUs.get().isalpha():
 		MB.showerror("Error", "Usuario Solo Puede Llevar LETRAS")
 	else:
-		if strUs.get()=="a" and strCon.get()=="a":
+		if strUs.get()=="albar" and strCon.get()=="albar":
 			abrirVentana()
 		else:
 			MB.showerror("Error", "Usuario o Contraseña Incorrectos")	

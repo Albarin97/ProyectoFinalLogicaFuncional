@@ -59,6 +59,42 @@ class DataBase:
 			raise e
 		return ventas
 
+	def select_pb(self):
+		sql = "SELECT * FROM productos ORDER BY precio DESC"
+		try:
+			self.cursor.execute(sql)
+			productos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return productos
+
+	def select_pa(self):
+		sql = "SELECT * FROM productos ORDER BY precio ASC"
+		try:
+			self.cursor.execute(sql)
+			productos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return productos
+
+	def select_cb(self):
+		sql = "SELECT * FROM productos ORDER BY cantidad DESC"
+		try:
+			self.cursor.execute(sql)
+			productos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return productos
+
+	def select_ca(self):
+		sql = "SELECT * FROM productos ORDER BY cantidad ASC"
+		try:
+			self.cursor.execute(sql)
+			productos = self.cursor.fetchall()
+		except Exception as e:
+			raise e
+		return productos
+
 	def alta(self, m, mo, t, p, c):
 		sql = "INSERT INTO productos (marca, modelo, tipo, precio, cantidad) VALUES ('%s', '%s', '%s', %d, %d)"%(m, mo, t, p, c,)
 		try:
@@ -86,7 +122,6 @@ class DataBase:
 
 	def venta(self, idp, cl, ca, co, t, d):
 		sql = "INSERT INTO ventas (idproducto, cliente, cantidad, costo, telefono, direccion) VALUES (%d, '%s', %d, %d, '%s', '%s')"%(idp, cl, ca, co, t, d,)
-
 		try:
 			self.cursor.execute(sql)
 			self.connection.commit()
@@ -101,6 +136,15 @@ class DataBase:
 		except Exception as e:
 			raise e
 		return datos
+
+	def vaciarVentas(self):
+		sql="DELETE FROM ventas"
+		try:
+			self.cursor.execute(sql)
+			self.connection.commit()
+		except Exception as e:
+			raise e
+
 #database = DataBase()
 #database.select_one("A")
 #database.select_all()
